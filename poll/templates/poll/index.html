@@ -1,0 +1,77 @@
+{% extends "poll/layout.html"%}
+
+{% block title %}  New Poll {% endblock title%}
+
+{% block style %}  {% endblock style %}   
+
+
+{% block links %}   {% endblock links %} 
+
+{% block body %} 
+{% load widget_tweaks %}
+    <div class="container">
+        <div class="row mt-2">
+            
+            <div class="col-md-5"> 
+            
+                    
+                <div class="alert alert-dark" >
+                    Total Polls     <span class="text-danger ml-5"> {{total}} </span> 
+
+                      <a href="{% url 'total_polls' %}" class="btn btn-primary float-right"> Back</a>
+                </div>
+                
+                <!-- Recent 10 question -->
+                {% for i in recent_question|slice:"0:10" %}
+                <ul class="list-group ">
+                    
+                    <li class="list-group-item"> {{i.title}}  <span class="badge badge-primary float-right font-weight-normal">{{i.created_by}}</span> </li> 
+                    {% comment %} {{i.choices}} {% endcomment %}
+                    
+                </ul>
+                {% endfor %}
+            </div>
+            
+
+            <div class="col-md-7 shadow bg-white rounded"> 
+            
+                <div class="alert alert-primary" role="alert">
+                    Create A New Poll
+                </div>
+
+            <form action="" method="Post">
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="">Enter Poll Question</label>
+                    {% render_field question_form.title|attr:"rows:2" class="form-control" %}
+                   
+                </div>
+
+                <div class="row">    
+                    
+                        
+                    {% for i in choice_form %}
+                        <div class="col-md-3"> 
+                            Choice {{ forloop.counter }}
+                            {% render_field i.text class="form-control"    placeholder="Enter Option " %}
+                        </div>
+
+                    {% endfor %}
+
+                </div>     
+
+                
+                <button type="submit" class="btn btn-primary mt-3  ">Submit</button>
+
+            </form>
+
+            
+            </div>
+
+        </div>
+    </div>
+
+ {% endblock body%}
+
+{% block script %}  {% endblock script %}
+

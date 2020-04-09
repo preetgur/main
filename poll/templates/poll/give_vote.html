@@ -1,0 +1,51 @@
+{% extends "poll/layout.html"%}
+
+{% block title %} Give Vote  {% endblock title%}
+
+{% block style %}  {% endblock style %}   
+
+
+{% block links %}   {% endblock links %} 
+
+{% block body %}  
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-12">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="card text-center">
+                <h5 class="card-header">Cast Your Vote</h5>
+                <div class="card-body">
+                    <h2 class="card-title">{{question.title}}</h2>
+                    <p class="card-text">
+                    
+                    {% for i in question.choices %}
+
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                            
+                                {{i.text}} 
+                                <input type="radio" class="form-check-input" name="answer" value="{{i.id}}">
+
+                            </label>
+                        </div>
+
+                    {% endfor %}                    
+                    </p>
+
+
+                   
+                    <button type="submit"  class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+        </form>
+        {% comment %} <div class="col-md-"></div> {% endcomment %}
+    </div>
+</div>
+
+{% endblock body%}
+
+{% block script %}  {% endblock script %}
+

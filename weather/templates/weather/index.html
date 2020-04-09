@@ -1,0 +1,142 @@
+{% extends "poll/layout.html"%}
+
+{% block title %} {% endblock title%}
+
+{% block style %} {% endblock style %}
+
+
+{% block links %} {% endblock links %}
+
+{% block body %}
+<div class="container">
+    {% for i in messages%}
+
+    <div class="alert alert-primary text-center" role="alert">
+            {{i}}
+    </div>
+    {% endfor %}
+
+    <!-- {{data}} : All data source -->
+    
+
+
+    <div class="row m-5">
+       
+
+        <div class="col-md-4">
+
+            <div class="card text-center">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="card-header">
+                        Weather App
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Know The Weather of Your City</h5>
+
+                        <input type="text" name="city" placeholder="Enter City" class="form-control">
+                    </div>
+                    <div class="card-footer text-muted">
+                        <input type="submit" class="btn btn-primary" value="Get Weather">
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+        <div class="col-md-8">
+
+            {% if data %}
+
+            <div class="alert alert-primary text-center" role="alert">
+             {{name}} | {{data.sys.country}}
+            </div>
+
+            <div class="row d-flex justify-content-between">
+                <div class="col-6-md">
+
+                     <div class="btn-group-vertical btn-group-lg ">
+                        <a href="#" title="Weather Condition" class="btn btn-danger mt-1" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="{{weather.0.main}} | {{weather.0.description}}">Weather Condition</a>
+
+                        <a href="#" title="Temprature | Min | Max | Fells Like" class="btn btn-danger mt-1" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="{{main.temp}} | {{main.temp_min}} | {{main.temp_max}} | {{main.feels_like}}">Temprature</a>
+
+                        <a href="#" title="Speed: m/s | Angle : deg" class="btn btn-danger mt-1" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="{{data.wind.speed}} | {{data.wind.deg}}">Wind</a>
+
+
+                        <a href="#" title="Longitude | Latitude" class="btn btn-danger mt-1" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="{{coord.lon}} | {{coord.lat}}">Longitude | Latitude</a>
+
+              
+
+                    </div>
+
+                    
+                </div>
+                
+                <div class="col-6-md">
+                    
+                     <div class="btn-group-vertical btn-group-lg ">
+
+                    <a href="#" title="Sunrise | Sunset"  id="sunrise"class="btn btn-danger mt-1" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="{{coord.lon}} | {{coord.lat}}">Sunrise | Sunset</a>
+
+                        <a href="#" title="Pressure | Humidity "  id="sunrise"class="btn btn-danger mt-1" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="{{main.pressure}}: hpa  | {{main.humidity}} : %  ">Pressure | Humidity </a>
+
+
+                        <a href="#" title="Clouds" class="btn btn-danger mt-1" data-trigger="focus" data-toggle="popover" data-placement="right" data-content="{{clouds}} : % ">Clouds</a>
+
+                        <a href="#" title="Sea Level | Ground Level" class="btn btn-danger mt-1" data-trigger="focus" data-toggle="popover" data-placement="right" data-content=" {{data.main.sea_level}} | {{data.main.grnd_level}} "> Sea Level | Ground Level</a>
+
+
+
+
+                        
+
+                </div>
+                </div>
+            </div>
+
+            
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock body%}
+
+{% block script %} 
+
+    <script>
+
+        let unix = "{{data.sys.sunrise}}"
+        let unix2 = "{{data.sys.sunset}}"
+
+        let sunrise = new Date(unix*1000);
+        sunrise = sunrise.toLocaleTimeString();
+
+        let sunset = new Date(unix2*1000);
+        sunset = sunset.toLocaleTimeString();
+
+        {% comment %} document.getElementById("sunrise").innerHTML = sunrise; {% endcomment %}
+        {% comment %} document.getElementById("sunset").innerHTML = sunset; {% endcomment %}
+
+        console.log(sunrise,sunset);
+
+        // Neccassary for pop over
+        $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+        
+        });
+
+
+        $('#sunrise').on('click', function(){
+
+            $(this).attr('data-content',`${sunrise} | ${sunset}`);
+
+            $(this).popover('show');
+            
+        });
+
+                            </script>
+
+{% endblock script %}

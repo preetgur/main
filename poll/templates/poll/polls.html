@@ -1,0 +1,67 @@
+{% extends "poll/layout.html"%}
+
+{% block title %}  Avilable Polls {% endblock title%}
+
+{% block style %} 
+
+span
+{
+    float : end;
+}
+ {% endblock style %}   
+
+
+{% block links %}   {% endblock links %} 
+
+{% block body %} 
+
+<div class="container">
+
+    {% for i in messages %}
+        <div class="alert alert-primary text-center" role="alert">
+            {{i}}
+        </div>
+        
+    {% endfor %}
+
+    <div class="d-inline-block mt-3 p-2 bg-info  text-white round ">
+    
+        Total Polls <span class="badge badge-light">{{total}}</span>
+    </div>
+    <div class="d-inline-block mt-3 p-2  float-right text-white">
+        <a href="{% url "poll" %}" class="btn btn-danger">Create New Poll</a>
+    </div>
+
+    <div class="row mt-5 ">
+        <div class="col-md-10 ">
+        <h3 class="bg-danger text-center p-2">Question List</h3>
+            {% for i in all_question %}
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> 
+                   <span class=" mr-2 text-info">{{forloop.counter}} )</span>    {{i.title}}  
+                        <span class="float-right"> 
+                        {% load tags %}
+                            {% if i.created_on|status %}
+                                <a href="{% url 'give_vote' i.id %}" class="btn btn-primary"> Vote</a>  
+                                
+                            {% else%}
+                                <a href="#" class="btn btn-primary">Time Over</a>  
+                                   
+                            {% endif %}   
+                            <a href="{% url 'result' i.id %}" class="btn btn-danger"> Result</a> 
+                        </span> 
+                    </li>
+                </ul>
+
+            {% endfor %}
+        
+        </div>
+    </div>
+</div>
+
+
+ {% endblock body%}
+
+{% block script %}  {% endblock script %}
+
