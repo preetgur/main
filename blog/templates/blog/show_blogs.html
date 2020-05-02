@@ -1,0 +1,122 @@
+{% extends "poll/layout.html"%}
+
+{% block title %} {% endblock title%}
+
+{% block style %}
+
+img
+{
+width : 200px;
+height : 100px;
+
+}
+
+a
+{
+text-decoration : none !important;
+}
+{% endblock style %}
+
+
+{% block links %} {% endblock links %}
+
+{% block body %}
+{% load widget_tweaks %}
+{% load static %}
+<div class="container">
+    <div class="row mt-4">
+
+        <!-- Accessing  the New_Blog Model From Images Model with the help of FK-->
+        <!-- inside views.py
+        "img":Images.objects.all()  
+        (blog) atrribute is linked with New_blog model 
+
+      <img src="{{MEDIA_URL}}{{ i.pic}}"><br> 
+     <img src="{{ i.pic.url}}"><br>  (because we declare the imagefield in models so we can 
+     access the img using ".url" without including {Media_url})
+
+       -->
+
+        <!--     {% for i in images %}
+            {{i.blog}}
+            {{i.blog.created_by}} {# Access the Blog Model values #}
+            {{i.blog.content}}
+    
+            <img src="{{ i.pic.url}}"><br>
+
+        {% endfor %}
+        -->
+
+
+
+
+
+        {% comment %} <a href="{% static 'blog/my.txt' %}">My Text </a> {% endcomment %}
+        <div class="col-md-9">
+            {% for i in blogs %}
+
+                <div class="card mb-4" id="{{i.id}}">
+                    <div class="card-body" style="background-color: #e9ecef;">
+                        <h2 class="card-title text-danger">{{ i.title }}</h2>
+                        <p class="card-text  h6 text-danger">
+                            {{i.created_by|upper}} | <span class="text-muted">{{ i.created_on}} </span>
+                        </p>
+                        <hr>
+                        <p class="card-text">
+                            {{i.display_my_safefield|slice:":200" }}
+
+                            {% if i.content|length > 200 %}
+                            <span class="text-danger ml-1">. . . .</span>
+                            {% endif %}
+
+                        </p>
+
+                        
+                        {% if i.content|length > 200 %}
+                    
+                        <a href="{% url 'detail_blog' i.id%}" class="btn btn-primary">Read More &rarr;</a>
+
+                        {% else%}
+                            {# Here we used only first 'img' from "blog" model by hardcoded #}
+                            {# {{i.img}} => returns a list of tuple like "[('1.jpg',''),(2.jpg,"") ]" #}
+                            {# {{i.img.0}} => we got the first tuple like  ('1.jpg','') #} 
+                            {# {{i.img.0.0}} =>and last we got the name of img as[ 1.jpg ]#}
+                            <a href="{{MEDIA_URL}}{{i.img.0.0}}">
+                                {% if i.img.0.0 != "default.png" %}
+
+                                <img src="{{MEDIA_URL}}{{i.img.0.0}}" class="img-fluid m-3" alt="No image">
+                                {% endif %}
+                            </a>
+                           {# {{i.img}}  {{i.img.0}} {{i.img.0.0}} #}
+
+                        {% endif %}
+
+
+                    </div>
+                </div>
+
+
+            {% endfor %}
+        </div>
+    </div>
+
+        <div class="col-md-3">
+            <ul class="list-group list-group-flush">
+                <h3> Recent Blogs</h3>
+                {% for i in blogs %}
+
+                <li class="list-group-item text-danger">
+                    <a href="#{{i.id}}" class="text-danger">{{i.title}} </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock body%}
+
+{% block script %} {% endblock script %}

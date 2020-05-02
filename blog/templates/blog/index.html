@@ -1,0 +1,121 @@
+{% extends "poll/layout.html"%}
+
+{% block title %}  Poll Index {% endblock title%}
+
+{% block style %}  {% endblock style %}   
+
+
+{% block links %}   {% endblock links %} 
+
+{% block body %}  
+
+
+   
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="text-center">Django Projects</h1>
+          </div>
+    </div>
+
+    <div class="row m-5">
+        <div class="col-md-10">
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="list-group" id="list-tab" role="tablist">
+                    <a class="btn btn-group-lg bg-danger" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">
+                    Poll App</a>
+                    <a class="btn btn-group-lg bg-danger mt-2" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Weather App</a>
+                    <a class="btn btn-group-lg bg-danger mt-2" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Employee Management</a>
+
+                    <a class="btn btn-group-lg bg-danger mt-2" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Blog App</a>
+
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active " id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+
+                            <div class="jumbotron text-center">
+                                <h3>Poll App</h3>
+                                <p>
+                                    This Web App is used to create poll. Only admin can create the poll. Every poll has three  option. Only the user which is register is able to cast their vote. Poll results can be seen by everyone. It shows how many user's cast their vote.
+                                    <br> <br>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, ducimus ex modi placeat, quibusdam, ut maiores dignissimos vitae facere voluptatem commodi fuga. Voluptate, non? Adipisci fugiat obcaecati aspernatur tempore quod!
+                                </p>
+                                <a href="{% url 'total_polls'%}" class="btn btn-danger">Go To App</a>
+                            </div>
+                         
+                    
+                        </div>
+                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+
+                      <div class="jumbotron text-center">
+                                <h3>Weather App</h3>
+                                <p>
+                                    This App shows the Weather of the location you searched .
+                                   
+                                </p>
+                                <a href="{% url 'weather_index'%}" class="btn btn-danger">Go To App</a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+
+                        <div class="jumbotron text-center">
+                                <h3>Employee Management System</h3>
+                                <p>
+                                    This Web App is used to create poll. Only admin can create the poll. Every poll has three  option. Only the user which is register is able to cast their vote. Poll results can be seen by everyone. It shows how many user's cast their vote.
+                                    <br> <br>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, ducimus ex modi placeat, quibusdam, ut maiores dignissimos vitae facere voluptatem commodi fuga. Voluptate, non? Adipisci fugiat obcaecati aspernatur tempore quod!
+                                </p>
+                                <a href="{% url 'total_polls'%}" class="btn btn-danger">Go To App</a>
+                            </div> 
+
+
+                        </div>
+                        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+
+                        <div class="jumbotron text-center">
+                                <h3>Blog App</h3>
+                                <p>
+                                    This Web App is used to create poll. Only admin can create the poll. Every poll has three  option. Only the user which is register is able to cast their vote. Poll results can be seen by everyone. It shows how many user's cast their vote.
+                                    <br> <br>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, ducimus ex modi placeat, quibusdam, ut maiores dignissimos vitae facere voluptatem commodi fuga. Voluptate, non? Adipisci fugiat obcaecati aspernatur tempore quod!
+                                </p>
+                                <a href="{% url 'all_blogs'%}" class="btn btn-danger">Go To App</a>
+                            </div> 
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+             
+        </div>
+
+        <div class="col-md-2">
+
+            
+        </div>
+
+    </div>
+  
+
+{% endblock body%}
+
+{% block script %}  
+<script>
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});
+
+
+$('#ems').on('click', function(){
+
+    $(this).attr('data-content','Cannot proceed with Save while Editing a row.');
+
+    $(this).popover('show');
+    
+});
+</script>
+{% endblock script %}
+

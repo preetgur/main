@@ -1,0 +1,266 @@
+{% extends "poll/layout.html"%}
+
+{% block title %}   {% endblock title%}
+
+{% block style %}  
+
+@media (max-width: 576px) 
+{ 
+
+  #created
+  {
+     
+    color: brown;
+    visibility: hidden;
+    width: 100%;
+    height: 0px;
+  }
+
+  #choice
+  {
+      margin-top : 10px;
+  }
+
+  #card-col
+  {
+    display: flex;
+    justify-content: space-evenly;
+  }  
+}
+
+
+{% endblock style %}   
+
+
+{% block links %}   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+{% endblock links %} 
+
+{% block body %} 
+{% comment %} {% load custom_tags %} {% endcomment %}
+
+{% load widget_tweaks %}
+    <div class="container">
+
+{% load tags %}
+    {% if poll.created_on|status %}
+        <h1>Poll is Active</h1>
+    {% else%}
+        <h2>Poll is Not Active</h2>    
+    {% endif %}    
+
+     <div class="row mt-3">
+        <div class="col-md-7 mx-auto">
+            <div class="card text-center text-light ">
+                <div class="card-body bg-danger">Question : {{poll}}
+                    <a href="{% url 'total_polls' %}" class="btn btn-primary float-right"> Back</a>
+                </div>
+            </div>
+
+            
+        </div>
+
+
+        <div class="col-md-5 bg-danger d-flex justify-content-center " id="created">
+        
+            <ul class="list-group list-group-horizontal-md  d-flex align-items-center">
+                <li class="list-group-item">Created By  </li>
+                <li class="list-group-item">{{poll.created_by|upper}}</li>
+                <li class="list-group-item">{{poll.created_on}}</li>
+
+         
+            </ul>
+             
+        </div>
+
+    </div>
+
+
+    <div class="row mt-3">
+
+        <div class="col-md-6">
+
+       
+            <div class="col-md-10">
+
+                <div id="myChart"></div>  <!-- For Zing Chart-->
+            </div>
+    
+      
+            <script>
+    
+                // Get the question id
+    
+                let question_id = "{{poll.id}}";
+                console.log(question_id)
+                // Go to the url
+    
+                let data_url = `/ajax_json/${question_id}`;
+                console.log(data_url)
+    
+                $.ajax({
+                    method : "GET",
+                    url : '{% url "ajax_json" poll.id %}',
+                    success: function(response) 
+                    {
+                        console.log("Response",response);
+                        console.log(response[0]["votes"]);
+
+                        // Zing chart Setup 
+
+                          let myconfig = {
+                            type: 'bar',
+                            theme: 'dark',
+                            title: {
+                               
+                              },
+                              
+                              scaleX: {
+                                // Set scale label
+                                label: { text: 'Votes' },
+                                // Convert text on scale indices
+                                labels: [ response[0]['text'], response[1]['text'],response[2]['text'] ]
+                              },
+
+                              'scale-y': {
+                                'min-value': "0",
+                                'max-value': "20",
+                                short: true
+                            },
+                            plot: {
+                                'value-box': {
+                                    short: true
+                                }
+                            },
+                            series: [
+                                { values: [  response[0]['votes'] , response[1]['votes'],response[2]['votes'] ] },
+                            ]
+                        }
+            
+                        zingchart.render({
+                            id: 'myChart',
+                            data: myconfig,
+                        });
+
+                    }
+                });
+    
+               
+            </script>
+          
+        
+
+
+
+
+        </div>
+    <!-- ##########################33-->
+    <div class="col-md-6" id="choice">
+
+            <div class="alert alert-primary text-center" role="alert">
+                Choices
+            </div>
+
+          
+            <div class="card-columns" id="card-col">
+
+                {% for i in choice %}
+
+                <div class="card text-white  text-center bg-info mb-3" style="max-width: 8rem;">
+                    <div class="card-header">{{i|upper}}</div>
+                    <div class="card-body">
+                        <h5 class="card-title"> {{i.votes}}</h5>
+
+                   
+                    </div>
+
+                </div>
+                {% endfor %}   
+            </div>
+                <!-- ###-->
+
+            
+                <!-- ###-->
+
+
+                <div class="card text-white mx-auto text-center bg-success mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Total Votes</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{count}}</h5>
+                    </div>
+                </div>
+
+            
+            <!-- ###-->
+
+        </div>
+    
+    
+    
+    </div>
+
+
+
+
+
+    {% if request.user|is_admin:"gurpeet" %}
+        <div class="row mt-3">
+            
+            <div class="col-md-6"> 
+            
+                <div class="alert alert-primary text-center" role="alert">
+                    User Who Voted
+                </div>
+                <ul class="list-group">
+
+                {% for i in user %}
+                    <li class="list-group-item">{{i.username}} - {{i.email}}</li>
+                    
+                {% endfor %}
+
+                </ul>
+            
+            </div>
+            <div class="col-md-6"> 
+             
+                {% comment %} Total Answer of All Polls :  {{total_answer}} {% endcomment %}
+
+             
+
+                <div class="alert alert-primary text-center" role="alert">
+                    Whom User Voted   : Admin Section
+                </div>
+                   
+                    <ul class="list-group">
+                        {% for i in choice%}
+                    
+                            <li class="list-group-item bg-danger">Choice : {{i}}</li>
+                            <li class="list-group-item">user id :{{i.total_votes}}</li>
+                            <li class="list-group-item">{{i.who_voted}}</li>
+
+                            <li class="list-group-item">
+                                {% for j in i.who_voted %}
+                                    {{j|upper}}
+
+                                {% endfor %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                {% else %}
+                    
+                {% endif %}
+
+
+
+               <br>
+
+
+        </div>
+    </div>
+
+ {% endblock body%}
+
+{% block script %}  {% endblock script %}
+

@@ -1,0 +1,323 @@
+{% extends "poll/layout.html"%}
+
+{% block title %} Detail Blog {% endblock title%}
+
+{% block style %} 
+
+
+{% endblock style %}
+
+
+{% block links %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock links %}
+
+{% block body %}
+{% load widget_tweaks %}
+<div class="container">
+    <div class="row mt-4">
+
+        <div class="col-md-9">
+
+            <div class="card mb-4" id="{{i.id}}">
+                
+                <div class="card-body" style="background-color: #e9ecef;">
+
+                <div class="row">
+                    <div class="col-md-9 ">
+                        <h2 class="card-title text-danger">{{ i.title }} </h2>
+                        <p class="card-text  h6 text-danger">
+                            {{i.created_by|upper}} | <span class="text-muted">{{ i.created_on}} </span>
+                        </p>
+                    </div>
+
+                    <div class="col-md-3 ">
+                    {% if user_additional %} 
+                    <span class="float-right">
+                        
+                        <img src="{{MEDIA_URL}}{{user_additional.profile_pic}}" class="rounded-circle " style="width:100px;height:auto;" alt="No image">
+                    </span>
+                    </div>
+
+                </div>
+                    {{request.user.blog_set.count}}
+                    {% comment %} {{request.user.blog_set.} {% endcomment %}
+                    <hr>
+                    {% for i in request.user.blog_set.values %}
+                        {{i.title}} 
+                        {{i.created_on}}<br>
+                  
+                    {% endfor %}
+
+                {% for j in request.user.comment_set.all %}
+                {{j.parent}}
+                        {% comment %} {{j.blog}}
+                        {{j.user}}
+                        {{j.message}}     {% endcomment %}
+                {% endfor %}
+                   <p class="card-text  h6 text-danger"> Contact | <span class="text-muted">{{user_additional.mobile}} </span>
+                   {{user_additional.get_blog_list}}
+                   {{i.count_blog}}
+                   </p>
+                   {% endif %}
+                    <hr>
+                    <p class="card-text">
+
+                        {# "display_my_safefield" return the html escaping used in "content" inside blog #}
+                        {{i.display_my_safefield}}
+
+
+                    </p>
+
+                    <div style="width:25%;height:auto;display:flex;">
+
+                    {% for j in i.img %}
+                    <!-- "img" is the method defined in "Blog" model that return "pic" from "Images" Model-->
+                        <!--Return tuple so iterate again -->
+
+                        
+                        {# using Reverse relationship #}
+        
+                    {% for k in j %}
+                    {% if k != "default.png" %}
+
+                   <!-- <a href="{{MEDIA_URL}}{{k}}">-->
+                        <img src="{{MEDIA_URL}}{{k}}" class="img-fluid m-2" alt="No image">
+
+                   <!-- </a>--> 
+
+                    {% endif %}
+
+                    {% endfor %}
+                    {% endfor %}
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="my-4 rounded " style="background-color: #e9ecef;">
+                <h3 class=" text-center text-danger my-3">Comments ({{total_comments}})</h3>
+
+                {% for comment in comments%}
+
+                <div class="row m-3 p-2 rounded border border-dark">
+                    <div class="col-2  ">
+                        {% load static %}
+                        <img src="{% static "blog/gym.jpg"%}" class="rounded-circle img-fluid" alt="Cinque Terre">
+                        comment id : {{ comment.id }}
+                    </div>
+
+                    <div class="col-9">
+                        <div>
+                            <h6 style="display:inline-block;" class="text-danger">{{comment.user}}
+                                {{comment.user.id}} <span class="text-dark">Says</span> </h6>
+                            <span class="float-right text-danger">
+                                {{ comment.timestamp|timesince }} ago
+                            </span>
+                        </div>
+
+                        <p> {{comment.message}} </p>
+                        <!-- "likes" is the related name in Like model which is FK to comment model
+                                : In this we use "reverse relationship" concept-->
+                        {% if request.user in comment.likes.users.all or request.user in comment.dis_likes.users.all%}
+                        already voted
+
+
+                        {% else %}
+                        not voted
+                        {% endif%}
+
+                        <a href={% url 'like' comment_id=comment.id option='like' blog_id=i.id %}>
+
+                            <i class="fa fa-thumbs-o-up" aria-hidden="true">
+                                </i>
+                        </a>
+                        <span class="ml-1">
+
+                                    {% if comment.get_total_likes  %}
+                                    {{comment.get_total_likes}}
+                                    {% else %}
+                                    0
+                                    {% endif %}
+                                </span>
+
+
+
+                        <span class="mx-4"></span>
+                        <a href={% url 'like' comment_id=comment.id option='dis_like' blog_id=i.id %}>
+                            <i class="fa fa-thumbs-o-down" aria-hidden="true">
+                               
+                            </i>
+                        </a>
+                         <span class="ml-2">
+
+                                    {% if comment.get_total_dis_likes  %}
+                                    {{comment.get_total_dis_likes}}
+                                    {% else %}
+                                    0
+                                    {% endif %}
+                        </span>
+
+                        <span class="float-right text-primary btn" id="rep-show-{{comment.id}}">
+                            {% if comment.get_total_replies %}
+                            view replies... {{comment.get_total_replies}}
+
+                            {% else %}
+
+                            {% endif %}
+                        </span>
+
+                        <script>
+
+                            $("div[id^='reply']").hide();
+                            $(`#rep-show-{{comment.id}}`).click(function () {
+
+                                $(`#reply-{{comment.id}}`).toggle();
+                                console.log("clicked");
+
+                            });
+
+
+                        </script>
+
+
+                        <div id="reply-{{comment.id}}" class="ml-4">
+                            <!-- "replies" is the related name defined in models "comment"
+                                parent = models.ForeignKey('self',on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+                                -->
+                            {% for replay in comment.replies.all %}
+                            <div class="my-4 rounded bg-dark text-light">
+                                <p class="text-danger">{{ replay.user}} | Reply<span class="float-right">
+                                        {{ replay.timestamp|timesince}} ago</span></p>
+                                <p class="info"></p>
+                                {{ replay.message }}
+
+                                <div>
+                                    <a href={% url 'like' comment_id=replay.id option='like' blog_id=i.id %}>
+
+                                        <i class="fa fa-thumbs-o-up text-light" aria-hidden="true">
+                                        </i>
+                                    </a>
+                                     <span class="ml-1">
+
+                                                {% if replay.get_total_likes  %}
+                                                {{replay.get_total_likes}}
+                                                {% else %}
+                                                0
+                                                {% endif %}
+                                    </span>
+
+                                    <span class="mx-4"></span>
+                                    <a href={% url 'like' comment_id=replay.id option='dis_like' blog_id=i.id %}>
+
+                                        <i class="fa fa-thumbs-o-down text-light" aria-hidden="true">
+                                        </i>
+                                    </a>
+                                     <span class="ml-2">
+
+                                                {% if replay.get_total_dis_likes  %}
+                                                {{replay.get_total_dis_likes}}
+                                                {% else %}
+                                                0
+                                                {% endif %}
+                                        </span>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+
+                        <button type="button" id="btn-{{comment.id}}" class="btn btn-sm btn-success ml-4">Reply</button>
+                      
+
+                        <form action="" method="post" id="new-reply-{{comment.id}}">
+                            {% render_field form.message|attr:"rows:3"   class="form-control text-center ml-4" placeholder="Reply To Comment" %}
+
+                            {% csrf_token %}
+                            <!-- Hidden input for parent comment.id -->
+                            <input type="hidden" name="comment_id" value="{{ comment.id }}">
+
+
+                            <input class="btn btn-primary btn-sm mt-1 btn-success float-right" type="submit"
+                                value="Send">
+
+                        </form>
+
+                          <script>
+                            var btn = "{{comment.id}}";
+                            $("form[id^='new-reply-']").hide();
+                            $(`#btn-${btn}`).click(function () {
+
+                                $(`#new-reply-{{comment.id}}`).toggle();
+                                $(`#btn-{{comment.id}}`).toggle();
+                            });
+                        </script>
+
+                    </div>
+
+
+                </div>
+                {% endfor %}
+
+            </div>
+
+
+
+
+
+            <!-- POST a Comment-->
+
+            <div class="bg-light">
+                <form action="" method="Post">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <h3 class="text-center">Add New Comment</h3>
+                        {% render_field form.message|attr:"rows:3"   class="form-control text-center" placeholder="Enter Your comment" %}
+
+                    </div>
+
+
+                    <center>
+                        <button type="submit" class="btn btn-sm btn-success ">Post Comment</button>
+                    </center>
+                </form>
+            </div>
+
+
+
+        </div>
+
+
+        <div class="col-md-3">
+
+            <ul class="list-group list-group-flush">
+                <h2>Recent Blogs</h2>
+                {% for i in blogs %}
+
+                <li class="list-group-item text-danger">
+                    <a href="{{i.id}}" class="text-danger">{{i.title}} </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+{% endblock body%}
+
+{% block script %}
+
+
+
+{% endblock script %}

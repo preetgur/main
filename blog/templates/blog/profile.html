@@ -1,0 +1,93 @@
+{% extends "poll/layout.html"%}
+
+{% block title %}   {% endblock title%}
+
+{% block style %}  {% endblock style %}   
+
+
+{% block links %}  
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+ {% endblock links %} 
+
+{% block body %} 
+{% load widget_tweaks %}
+    <div class="container">
+        <div class="row">
+                           
+            <form action="" method="POST">
+                {% csrf_token %}
+                First name : {{form.first_name}} <br>
+                last name : {{form.last_name}}  <br> 
+             
+                {% comment %} {% for interest_field in form.get_interest_fields %}
+                    Interest {{forloop.counter}}: 
+                    {{ interest_field }} <br>
+                {% endfor %} {% endcomment %}
+
+
+                Choices :
+                <input type="text" name="option_1" id="option_1" class="form-control mt-2">
+             
+                <div id="more"></div>
+
+                <i class="fas fa-plus"></i>
+                <p class="btn btn-danger">Add Another Choice choice</p>
+               
+
+                <button type="submit" class="form-control mt-2">Submit</button>
+            </form>
+           
+        </div>
+    </div>
+
+ {% endblock body%}
+
+{% block script %} 
+<script> 
+
+// ###############################
+
+    ob = {}
+    var count = 1;
+    $("p").click(function(){
+        count++ ;
+ 
+        // On Click "Add more choice " we create new input tag
+        var input = document.createElement("input");
+        input.id = `option_${count}`;
+        input.className = "form-control mt-2";
+        input.innerText = "Add New Choice";
+        input.name = `option_${count}`;
+
+        // Target the parent div block where input tag is placed
+        var div = document.querySelector('div#more');
+        div.appendChild(input);
+
+        // select the input tag startwith "option_1"
+        len = $( "input[id^='option_']" ).length;
+  
+        $("input[id^='option_']").blur(function()
+        {
+            $(this).css("background-color", "green");
+            $(this).css("color", "white");
+
+            /* for (var i = 1; i < len+1; i++) 
+                {           
+                    console.log(`########## ${i}`);
+                    choices = document.getElementById("option_"+ i).value;
+                    ob["option_"+ i] = choices;
+                    console.log(ob);
+                }
+
+            */
+        });
+
+    });
+
+
+
+</script>
+ {% endblock script %}
+

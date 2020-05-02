@@ -1,0 +1,102 @@
+{% extends "poll/layout.html"%}
+
+{% block title %} Dashoard{% endblock title%}
+
+{% block style %}  {% endblock style %}   
+
+
+{% block links %}   {% endblock links %} 
+
+{% block body %}  
+
+    <div class="container">
+
+    <div class="row mt-2">
+        <div class="col-md-4 bg-primary">
+
+            <h2 class="text-center text-dark">Hi,{{request.user|upper}}</h2>
+
+            <div class="text-center">
+                 <img src="{{request.user.user_additional_info.profile_pic.url}}" alt="" style="width:100px; height:auto;"  class="rounded-circle">
+
+            </div>
+
+        </div>
+        <div class="col-md-8 bg-dark text-white"> 
+        
+            <div class="text-center">
+                <p> Totall Blogs Posted :
+                <span class="ml-3 text-primary">  {{request.user.blog_set.count}} </span>
+                </p>
+           
+            </div>
+
+            <div>
+                <p>    
+                    <h3 class="text-center">Title</h3>
+                    <span class="m-0 text-danger">  
+                        {% for i in request.user.blog_set.values %}
+                            {{i.title}}  <span class="text-light">| {{i.created_on}}</span>
+                            <br>                    
+                        {% endfor %}                   
+                    </span>
+                </p>
+            </div>
+
+{% comment %} {{request.user.comment_set.exclude(user=ekbal)}} {% endcomment %}
+            <div class="">
+                        <p>
+                    <h3 class="text-center">Comment Posted By You  <span class="ml-4 text-danger">{{request.user.comment_set.count}}</span> </h3>
+                   
+                        {% for i in request.user.comment_set.all %}
+                        {# form reauest.user => comment => blog => user #}
+                       <span class="text-danger">{{i.blog.id}} </span>  |
+                        {{i.blog.created_by.username}} | 
+                       <span class="text-danger m-2"> {{i.get_total_likes}}</span>
+                       total replies :  <span class="text-primary m-2"> {{i.get_total_replies}}</span>
+                        | 
+                       <span class="text-success"> {{i.message|slice:":100" }}</span> 
+                        <br>
+                                    {% comment %} {{i.user}} {% endcomment %}
+                                    {% comment %} {{i.message}}     {% endcomment %}
+                            {% endfor %}
+                        </p>
+            </div>
+
+            <div class="likes">
+                <p>Comment you Liked : <span class="ml-4 text-danger">
+                {{request.user.user_comment_likes.count}} 
+                </p>
+                <br>
+                comment message :
+                <br>
+                {% for i in request.user.user_comment_likes.all %}
+                <span class="ml-4 text-danger">   {{i.comment.message}} </span> <br>
+                
+                {% endfor %}
+                </span></p>
+            </div>
+
+ <div class="dislikes">
+                <p>Comment you Disliked : <span class="ml-4 text-danger">
+                {{request.user.user_comment_dis_likes.count}} 
+                </p>
+            
+                comment message :
+                <br>
+                {% for i in request.user.user_comment_dis_likes.all %}
+                <span class="ml-4 text-danger">   {{i.comment.message}} </span> <br>
+                {% endfor %}
+                </span></p>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+
+{% endblock body%}
+
+{% block script %}  
+
+{% endblock script %}
