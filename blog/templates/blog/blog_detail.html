@@ -42,24 +42,9 @@
                     </div>
 
                 </div>
-                    {{request.user.blog_set.count}}
-                    {% comment %} {{request.user.blog_set.} {% endcomment %}
-                    <hr>
-                    {% for i in request.user.blog_set.values %}
-                        {{i.title}} 
-                        {{i.created_on}}<br>
-                  
-                    {% endfor %}
-
-                {% for j in request.user.comment_set.all %}
-                {{j.parent}}
-                        {% comment %} {{j.blog}}
-                        {{j.user}}
-                        {{j.message}}     {% endcomment %}
-                {% endfor %}
+                    
                    <p class="card-text  h6 text-danger"> Contact | <span class="text-muted">{{user_additional.mobile}} </span>
-                   {{user_additional.get_blog_list}}
-                   {{i.count_blog}}
+               
                    </p>
                    {% endif %}
                     <hr>
@@ -108,7 +93,7 @@
                     <div class="col-2  ">
                         {% load static %}
                         <img src="{% static "blog/gym.jpg"%}" class="rounded-circle img-fluid" alt="Cinque Terre">
-                        comment id : {{ comment.id }}
+                       {# comment id : {{ comment.id }}  #}
                     </div>
 
                     <div class="col-9">
@@ -124,11 +109,11 @@
                         <!-- "likes" is the related name in Like model which is FK to comment model
                                 : In this we use "reverse relationship" concept-->
                         {% if request.user in comment.likes.users.all or request.user in comment.dis_likes.users.all%}
-                        already voted
+                        {% comment %} already voted {% endcomment %}
 
 
                         {% else %}
-                        not voted
+                        {% comment %} not voted {% endcomment %}
                         {% endif%}
 
                         <a href={% url 'like' comment_id=comment.id option='like' blog_id=i.id %}>

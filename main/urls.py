@@ -22,6 +22,7 @@ urlpatterns = [
     path('student',include("student.urls")),
     path("poll/",include('poll.urls')),
     path("",include('blog.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 
 ]
 

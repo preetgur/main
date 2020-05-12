@@ -2,14 +2,14 @@
 
 {% block title %} Dashoard{% endblock title%}
 
-{% block style %}  {% endblock style %}   
+{% block style %} {% endblock style %}
 
 
-{% block links %}   {% endblock links %} 
+{% block links %} {% endblock links %}
 
-{% block body %}  
+{% block body %}
 
-    <div class="container">
+<div class="container">
 
     <div class="row mt-2">
         <div class="col-md-4 bg-primary">
@@ -17,86 +17,290 @@
             <h2 class="text-center text-dark">Hi,{{request.user|upper}}</h2>
 
             <div class="text-center">
-                 <img src="{{request.user.user_additional_info.profile_pic.url}}" alt="" style="width:100px; height:auto;"  class="rounded-circle">
+                <img src="{{request.user.user_additional_info.profile_pic.url}}" alt=""
+                    style="width:100px; height:auto;" class="rounded-circle">
 
             </div>
 
+            <p class="text-center">     <small class="text-dark">Last Login : {{request.user.last_login}}</small></p> 
         </div>
-        <div class="col-md-8 bg-dark text-white"> 
-        
-            <div class="text-center">
-                <p> Totall Blogs Posted :
-                <span class="ml-3 text-primary">  {{request.user.blog_set.count}} </span>
-                </p>
-           
-            </div>
+        <div class="col-md-8 bg-dark text-white text-center">
 
-            <div>
-                <p>    
-                    <h3 class="text-center">Title</h3>
-                    <span class="m-0 text-danger">  
-                        {% for i in request.user.blog_set.values %}
-                            {{i.title}}  <span class="text-light">| {{i.created_on}}</span>
-                            <br>                    
-                        {% endfor %}                   
-                    </span>
-                </p>
-            </div>
-
-{% comment %} {{request.user.comment_set.exclude(user=ekbal)}} {% endcomment %}
-            <div class="">
-                        <p>
-                    <h3 class="text-center">Comment Posted By You  <span class="ml-4 text-danger">{{request.user.comment_set.count}}</span> </h3>
-                   
-                        {% for i in request.user.comment_set.all %}
-                        {# form reauest.user => comment => blog => user #}
-                       <span class="text-danger">{{i.blog.id}} </span>  |
-                        {{i.blog.created_by.username}} | 
-                       <span class="text-danger m-2"> {{i.get_total_likes}}</span>
-                       total replies :  <span class="text-primary m-2"> {{i.get_total_replies}}</span>
-                        | 
-                       <span class="text-success"> {{i.message|slice:":100" }}</span> 
-                        <br>
-                                    {% comment %} {{i.user}} {% endcomment %}
-                                    {% comment %} {{i.message}}     {% endcomment %}
-                            {% endfor %}
-                        </p>
-            </div>
-
-            <div class="likes">
-                <p>Comment you Liked : <span class="ml-4 text-danger">
-                {{request.user.user_comment_likes.count}} 
-                </p>
-                <br>
-                comment message :
-                <br>
-                {% for i in request.user.user_comment_likes.all %}
-                <span class="ml-4 text-danger">   {{i.comment.message}} </span> <br>
-                
-                {% endfor %}
-                </span></p>
-            </div>
-
- <div class="dislikes">
-                <p>Comment you Disliked : <span class="ml-4 text-danger">
-                {{request.user.user_comment_dis_likes.count}} 
-                </p>
             
-                comment message :
-                <br>
-                {% for i in request.user.user_comment_dis_likes.all %}
-                <span class="ml-4 text-danger">   {{i.comment.message}} </span> <br>
-                {% endfor %}
-                </span></p>
-            </div>
-        </div>
 
+                <div class="card text-white bg-info mb-3" style="">
+                    <div class="card-header">Blogs Posted</div>
+                    <div class="card-body">
+                        <p class="card-text">   {{request.user.blog_set.count}}  </p>
+                    </div>
+                </div>
+                
+            
+
+                <div>
+                            
+                <table class="table table-sm ">
+                    <thead class="text-danger">
+                        <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        
+                        <th scope="col">Created On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in request.user.blog_set.all%}
+                    {{i.comment_set.all}}
+                        <tr class="bg-light">
+                        <th scope="row">{{i.id}}</th>
+                        <td>{{i.title}}</td>
+                        
+                        <td>{{i.created_on}}</td>
+                        {{i.display_my_safefield}}
+                        </tr>
+                    {% endfor %}
+                    
+                    </tbody>
+                </table>
+
+            </div>
+
+
+<div class="card-columns">
+
+                <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Total Comments  <span class="text-dark">{{request.user.comment_set.count}}</span> </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                       Replies <span class="text-dark">{{replies.count}}</span> | Comment <span class="text-dark">{{comment.count}}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Likes  <span class="text-dark">{{request.user.user_comment_likes.count}}</span></div>
+                    <div class="card-body">
+                        <p class="card-text">
+                         comments 
+                            <span class="text-dark">  
+                            {{like_comments.count}} 
+                            </span> |
+                             replies
+                            <span class="text-dark">
+                                {{like_replies.count}}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Dis Likes <span class="text-dark">{{request.user.user_comment_dis_likes.count}}</span> </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                        comments 
+                            <span class="text-dark">  
+                            {{dis_like_comments.count}} 
+                            </span> |
+                             replies
+                            <span class="text-dark">
+                                {{dis_like_replies.count}}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        
+            <p class="text-center">
+                <span class="bg-white text-danger"> Total : {{request.user.comment_set.count}} </span>
+
+                <span class="text-danger bg-white">[ Replies : {{replies.count}} </span>
+                <span class="text-danger bg-white"> Comments : {{comment.count}} ]</span>
+
+            </p>
+
+            <p>Replies</p>
+            <div class="table-responsive-sm " style="height : 200px; overflow-x:auto;">
+                <table class="table table-sm  table-dark table-hover">
+                    <thead>
+                        <tr class="bg-danger">
+                            <th scope="col">#</th>
+                            <th scope="col">Blog</th>
+                            <th scope="col">Blog ID</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Timestamp</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for i in replies%}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{i.blog}}</td>
+                            <td>{{i.blog.id}}</td>
+                            <td>{{i.message}}</td>
+                            <td>{{i.timestamp}}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <hr class="bg-primary">
+            <p>Comment</p>
+
+            <div class="table-responsive-sm " style="height : 200px; overflow-x:auto;">
+                <table class="table table-sm  table-dark table-hover">
+                    <thead>
+                        <tr class="bg-danger">
+                            <th scope="col">#</th>
+                            <th scope="col">Blog</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Timestamp</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for i in comment%}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{i.blog}}</td>
+                            <td>{{i.message}}</td>
+                            <td>{{i.timestamp}}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+            {% comment %} <div class="">
+
+                {% for i in request.user.comment_set.all %}
+                <h3 class="bg-danger">replies : {{i.total_replies}}</h3>
+                <h3>{{i.get_total_replies}}</h3>
+                {# form reauest.user => comment => blog => user #}
+                <span class="text-danger">{{i.blog.id}} </span> |
+                {{i.blog.created_by.username}} |
+                <span class="text-danger m-2"> {{i.get_total_likes}}</span>
+                total replies : <span class="text-primary m-2"> {{i.get_total_replies}}</span>
+                |
+                <span class="text-success"> {{i.message|slice:":100" }}</span>
+                <br>
+      
+                {% endfor %}
+                </p>
+            </div> {% endcomment %}
+
+
+            <hr class="bg-primary m-3">
+            <div class="likes"> 
+                <p>Total Likes : 
+                <span class="text-primary ml-4">
+                {{request.user.user_comment_likes.count}} 
+                </span> 
+                  <span class="text-danger ml-4">  
+                  {{like_comments.count}} comments
+                  </span> 
+                <span class="ml-4 text-success">
+                    {{like_replies.count}} replies
+                </span>
+                        
+                </p>
+                
+            </div>
+
+         
+            <div class="table-responsive-sm " style="height : 200px; overflow-x:auto;">
+            
+                <table class="table table-sm  table-dark table-hover">
+                    <thead>
+                        <tr class="bg-danger">
+                            <th scope="col">#</th>
+                            <th scope="col">Blog</th>
+                            <th scope="col">Blog ID</th>
+                            <th scope="col">Comment</th>
+                            <th scope="col">Timestamp</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for i in request.user.user_comment_likes.all %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{i.comment.blog.title}}</td>
+                            <td>{{i.comment.blog.id}}</td>
+                            <td>{{i.comment.message}}</td>
+                            <td>{{i.created_at}}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        <hr class="bg-primary m-3">
+
+          <div class="dis_likes"> 
+                <p>Total DisLikes : 
+                <span class="text-primary ml-4">
+                {{request.user.user_comment_dis_likes.count}} 
+                </span> 
+                  <span class="text-danger ml-4">  
+                  {{dis_like_comments.count}} comments
+                  </span> 
+                <span class="ml-4 text-success">
+                    {{dis_like_replies.count}} replies
+                </span>
+                        
+                </p>
+                
+            </div>
+
+             <div class="table-responsive-sm " style="height : 200px; overflow-x:auto;">
+            
+                <table class="table table-sm  table-dark table-hover">
+                    <thead>
+                        <tr class="bg-danger">
+                            <th scope="col">#</th>
+                            <th scope="col">Blog</th>
+                            <th scope="col">Blog ID</th>
+                            <th scope="col">Comment</th>
+                            <th scope="col">Timestamp</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for i in request.user.user_comment_dis_likes.all %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{i.comment.blog.title}}</td>
+                            <td>{{i.comment.blog.id}}</td>
+                            <td>{{i.comment.message}}</td>
+                            <td>{{i.created_at}}</td>
+                            
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    
     </div>
-    </div>
+</div>
 
 
 {% endblock body%}
 
-{% block script %}  
+{% block script %}
 
 {% endblock script %}

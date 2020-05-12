@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'poll',
     'poll.templatetags',   # using custom tags 
     'blog',
+    'ckeditor', # using for edit blog like ms-word  
+    'ckeditor_uploader',
     
 ]
 
@@ -154,3 +156,15 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "prtcbuspass@gmail.com"
 EMAIL_HOST_PASSWORD = "9814143615@a"
+
+
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+ 
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+ 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': None,
+    },
+}

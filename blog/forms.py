@@ -2,11 +2,12 @@ from django import forms
 from blog.models import Blog,Images,Profile,ProfileInterest,Comment
 
 
+from ckeditor.widgets import CKEditorWidget
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 class Blog_Form(forms.ModelForm):
 
-    
     title = forms.CharField(max_length=100)
-
+    content = forms.CharField(widget= CKEditorUploadingWidget())
     class Meta :
         model = Blog
         fields = ['title','content']

@@ -63,10 +63,12 @@ text-decoration : none !important;
                         </p>
                         <hr>
                         <p class="card-text">
-                            {{i.display_my_safefield|slice:":200" }}
+                         
+                            {{i.display_my_safefield|truncatewords:"40"}}
 
                             {% if i.content|length > 200 %}
-                            <span class="text-danger ml-1">. . . .</span>
+                                {% comment %} {{i.display_my_safefield|slice}} {% endcomment %}
+                            {% comment %} <span class="text-danger ml-1">. . . .</span> {% endcomment %}
                             {% endif %}
 
                         </p>
@@ -98,8 +100,7 @@ text-decoration : none !important;
 
             {% endfor %}
         </div>
-    </div>
-
+        
         <div class="col-md-3">
             <ul class="list-group list-group-flush">
                 <h3> Recent Blogs</h3>
@@ -114,6 +115,9 @@ text-decoration : none !important;
 
         </div>
 
+    </div>
+
+        
     </div>
 </div>
 

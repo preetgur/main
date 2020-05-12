@@ -11,7 +11,18 @@ def index(request):
 
 def dashboard(request):
     
-    context ={}
+    # blog = Blog.objects.all()
+    context = { 
+        "comment":Comment.objects.filter(user= request.user,parent__isnull=True),
+        "replies":Comment.objects.filter(user=request.user,parent__isnull=False),
+        "like_comments":Like.objects.filter(users=request.user,comment__parent__isnull=False),
+        "like_replies":Like.objects.filter(users=request.user,comment__parent__isnull=True),
+
+        "dis_like_comments":DisLike.objects.filter(users=request.user,comment__parent__isnull=False),
+        "dis_like_replies":DisLike.objects.filter(users=request.user,comment__parent__isnull=True),
+
+    }
+    
     return render(request,"blog/dashboard.html",context)
 
 

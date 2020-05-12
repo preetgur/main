@@ -19,12 +19,13 @@ class User_Additional_Info(models.Model):
 
      
 
+from ckeditor_uploader.fields import  RichTextUploadingField
 class Blog(models.Model):
 
     title = models.TextField(max_length=100)
-    content = models.TextField()
+    content = RichTextUploadingField()
     created_by = models.ForeignKey(User,on_delete=models.CASCADE)
-    user_profile_pic = models.ForeignKey(User_Additional_Info,on_delete=models.CASCADE,blank=True,null=True,related_name="user_additional_info")
+
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now = True)
 
@@ -44,7 +45,10 @@ class Blog(models.Model):
             self.save()
             return self.content
             
-        return mark_safe(self.content)    
+        return mark_safe(self.content)   
+
+
+
 
 
 
@@ -74,9 +78,15 @@ class Comment(models.Model):
     def get_total_dis_likes(self):
         return self.dis_likes.users.count()
         
-    @property
-    def get_total_replies(self): # total replies to each comment
-        return self.replies.count()
+    # @property
+    # def get_total_replies(self): # total replies to each comment
+    #     return self.replies.exclude(parent = None)
+
+
+    # @property
+    # def total_replies(self):
+    #     return Comment.objects.filter(blog= self.blog,parent__isnull=True).count()
+
 
 
 class Like(models.Model):
@@ -89,7 +99,7 @@ class Like(models.Model):
     def __str__(self):
         return str(self.comment.message)[:30]
 
-
+    
 class DisLike(models.Model):
     ''' Dislike  comment '''
     comment = models.OneToOneField(Comment, related_name="dis_likes", on_delete=models.CASCADE)
