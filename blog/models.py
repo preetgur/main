@@ -25,6 +25,7 @@ class Blog(models.Model):
     title = models.TextField(max_length=100)
     content = RichTextUploadingField()
     created_by = models.ForeignKey(User,on_delete=models.CASCADE)
+    blog_category = models.ManyToManyField('Blog_category',blank=True)
 
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now = True)
@@ -48,7 +49,11 @@ class Blog(models.Model):
         return mark_safe(self.content)   
 
 
+class Blog_category(models.Model):
+    name = models.CharField(max_length=100,blank=True,null=True)
 
+    def __str__(self):
+        return self.name
 
 
 

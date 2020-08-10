@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TemplateView</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Quickest Way to render template without using the views.py</h2>
+                <small>Inside views.py</small>
+                <p>First import TemplateView</p>
+                <code>from django.views.generic import TemplateView</code>
+                <p>Then set the path for template</p>
+                <code>urlpatterns = [path("",TemplateView.as_view(template_name = "d_forms/index.html"))]</code>
+
+                <p>Assuming we have the App as "d_forms" and then we create a template file in templates folder as "index.html"</p>
+
+                <p>That would render our template without views.py</p>
+
+            </div>
+
+            <div class="col-12">
+            <h2>How to send data to TemplateView</h2>
+            <p>First we import some data from database</p>
+            <small>Inside views.py</small>
+            <code>from blog.models import Blog</code> <span>"Blog" is the name of model</span>
+            <code>all_blogs = Blog.objects.all()</code>
+
+            <p>Then send to the template as :</p>
+            <small>One Way : using "extra_context"</small> <br>
+            <code>urlpatterns = [path("",TemplateView.as_view(template_name = "d_forms/index.html",extra_context= {'data':all_blogs}))]</code> <br>
+
+            <div> No. of blogs : {{data.count}}
+            </div>
+            <br>
+            <small>Second Way : using simply way</small> <br>
+            <code>urlpatterns = [path("",TemplateView.as_view(template_name = "d_forms/index.html"),{'data':all_blogs}]</code>
+
+                <div style="color : red; margin-left:20px;">
+                <ol>
+                    {% for i in on_sale %}
+                    <li> {{i.title}}</li>   
+                    {% endfor %}
+                </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

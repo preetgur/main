@@ -1,5 +1,5 @@
 {% extends "poll/layout.html"%}
-
+{% load static %}
 {% block title %} Detail Blog {% endblock title%}
 
 {% block style %} 
@@ -15,6 +15,8 @@ img {
 {% block links %}
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min.css'%}">
+
 
 {% endblock links %}
 
@@ -50,6 +52,17 @@ img {
                    <p class="card-text  h6 text-danger"> Contact | <span class="text-muted">{{user_additional.mobile}} </span>
                
                    </p>
+                        {% if i.blog_category.all %}
+                        <p class="card-text  h6 text-danger"> Tags | 
+                                {% for i in i.blog_category.all %}
+                                
+                                    <span class="text-muted"> {{i}} </span>
+               
+                                {% endfor %}
+                        </p>
+
+                        {% endif %}
+
                    {% endif %}
                     <hr>
                     <p class="card-text">

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter tags</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-9">
+             <h1>Built in Django filters</h1>
+             <small>{{blog|slice:":3"}}</small>
+             <p>{{blog|first}}</p>
+             <p><small>slugify using filter :</small>{{blog|first|slugify}}</p>
+             <p>{{blog|first|addslashes}}</p>
+             
+             <p><small>Make list using "make_list" filter :</small>{{blog|first|make_list}}</p>
+             <p> <small>Remove "while" using "cut" filter :</small> {{blog|first|cut:"while"}}</p>
+
+            <p><small>If data is coming "yes or no or novote": </small>{{blog|yesno}}</p>
+            
+            <p> 
+            <small>date filter :</small>
+            {% for i in blog|slice:":3" %}
+                {{i.created_on|date:"DATETIME_FORMAT"|linebreaks}}
+            {% endfor %}
+            </p>
+
+         Current DATE : using fiter tag now :  {% now "DATE_FORMAT" %}
+
+         {% lorem %}
+         <br>
+         <mark>simple context coming from filterIndex CBV</mark>
+         {{stores}}
+
+         <br>
+         <mark>Using "regroup" filter tag on context_data</mark>
+         {% regroup stores by city as city_list %}
+         {{city_list}}
+
+         <mark>{{city_list|first}}</mark>
+         <br>
+        <mark>grouper : </mark> {{city_list.0.grouper}} <br>
+         <mark>list : </mark>{{city_list.0.list}} <br>
+        {% for item in city_list.0.list %}
+                
+                <li>{{ item.name }}: {{ item.street }}</li>
+        {% endfor %}
+
+
+         {% regroup stores by city as city_list %}
+
+        <ul>
+        {% for city in city_list %}
+            <li>{{ city.grouper }}
+            <ul>
+                {% for item in city.list %}
+                
+                <li>{{ item.name }}: {{ item.street }}</li>
+                {% endfor %}
+            </ul>
+            </li>
+        {% endfor %}
+        </ul>
+
+
+             </div>
+        </div>
+    </div>
+</body>
+</html>

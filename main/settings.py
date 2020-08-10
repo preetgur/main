@@ -14,7 +14,10 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print("### abs path of settings.py                ### ",os.path.abspath(__file__))
+print("### Directory in which settings.py resides ### ",os.path.dirname(os.path.abspath(__file__)))
 
+print("### parent of above directory              ### ",BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -48,6 +51,8 @@ INSTALLED_APPS = [
     'blog',
     'ckeditor', # using for edit blog like ms-word  
     'ckeditor_uploader',
+
+    'd_forms' # new app
     
 ]
 
@@ -70,6 +75,8 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                # adding custom context processros
+                'd_forms.processors.context_blog',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',

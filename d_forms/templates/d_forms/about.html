@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Index</title>
+</head>
+<body>
+    <h3>CBV using Template views</h3>
+    <h1> Custom context processors </h1>
+    <small> <mark> {{context_data|first}} </mark> </small>
+    <hr>
+    <div> <p> <mark>Add context data </mark> :  {{aboutdata}}</p></div>
+
+    <div>**kwargs contains the context element but not included the context which included in "extra_context" inside TemplateView. But cotext after calling "super(AboutIndex,self).get_context_data"  contains all the context data. </div>
+
+    <div>
+    <code>path("about",views.AboutIndex.as_view(<mark>extra_context={"total":total_blog}</mark>),{'data':all_blogs,'tot':total_blog}),</code>
+
+    <p>kwargs contains : {'data':all_blogs,'tot':total_blog}</p>
+    <p>context contains : {"total":total_blog},{'data':all_blogs,'tot':total_blog} </p>
+    </div>
+
+    <div>
+    <code> <pre>
+    from django.views.generic import TemplateView
+
+    class AboutIndex(TemplateView):
+      template_name = 'd_forms/about.html'
+
+      def get_context_data(self, **kwargs):
+         # **kwargs contains keyword context initialization values (if any)
+         print(kwargs['tot'])  # gives reslut 
+         print(<mark>kwargs['total']</mark>)  # gives error [not included "extra_context"]
+
+         # Call base implementation to get a context
+         context = super(AboutIndex ,self).get_context_data(**kwargs)
+
+         print(<mark>context['total']</mark>)
+         print(context['data'])   # gives data
+         print(context['view'])
+
+         # Add context data to pass to template
+         context['aboutdata'] = 'Custom data'
+         return context
+         </pre>
+    </code>
+    </div>
+</body>
+</html>

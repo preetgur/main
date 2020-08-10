@@ -34,16 +34,19 @@ def create_blog(request):
     data = Blog.objects.all().order_by('-created_on')
 
     if request.method == "POST":
-        form = Blog_Form(request.POST)
+        form = Blog_Form(request.POST)  
+        print(request.POST)
         image_form = Images_Form(request.POST,request.FILES)
         
         if form.is_valid() and image_form.is_valid() :
-         
+            print(form)
             # remember in the forms.py file only includes the fields which use submit
             # from frontend 
             poll = form.save(commit=False)  # used to store the data filled by user
             poll.created_by = request.user
             poll.save()
+            print("#####")
+            print(poll)
 
             img = image_form.save(commit=False)
             img.blog = poll
@@ -79,6 +82,28 @@ from .models import Comment,User_Additional_Info
 from .forms import Comment_Form
 
 def detail_blog(request ,pk):
+    import os
+    print("## path ## ",os.path.basename(__file__))
+    print("## dir of basename ## ",os.path.dirname(os.path.basename(__file__)))
+
+
+    print("## path ## ",os.path.abspath(__file__))
+    print("## dir of abspath ## ",os.path.dirname(os.path.abspath(__file__)))
+
+    print("## path ## ",os.path.relpath(__file__))
+    print("## dir of relpath ## ",os.path.dirname(os.path.relpath(__file__)))
+
+    print("## path ## ",os.path.normpath(__file__))
+    print("## dir of normpath ## ",os.path.dirname(os.path.normpath(__file__)))
+
+    fil = os.path.join(os.path.dirname(__file__) ,os.path.basename(__file__))
+    print("$$$$ ",fil)
+
+    print("$$$ ###   ",os.path.dirname(__file__))
+
+
+
+
     ab =User_Additional_Info.objects.get(users=request.user)
     print("@#@#@#@#@#@##@ ",ab)
     # Get the Blog with the help of "pk"
@@ -93,7 +118,6 @@ def detail_blog(request ,pk):
 
         if form.is_valid():
 
-   
             # How to reply to comment
             """ 
             We add a QuerySet to retrieve all parent active comments for this post. After this, we validate the submitted data using the form's is_valid(). If the form is valid we check if submitted data comes from hidden input in replay button form. Next if parent_id exits we create parent object(parent_obj) for replay comment and replay_comment object, then we assign parent_obj to replay_comment. If parent_obj is equal to None we just proceed with normal comment by creating new_comment object and saving it to the database.
@@ -148,7 +172,9 @@ def detail_blog(request ,pk):
 
     context = {
         "i": blog,
+        "tags": blog.blog_category.all(),
         "blogs":blogs,
+
         "comments":Comment.objects.filter(blog = blog , parent__isnull=True).order_by('-timestamp'),
         "form":form,
         "total_comments":Comment.objects.filter(blog=blog,parent__isnull=True).count(),

@@ -24,6 +24,9 @@ urlpatterns = [
     path("",include('blog.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
+    path("forms/",include('d_forms.urls')),
+
+
 ]
 
 # media files
