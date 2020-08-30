@@ -2,7 +2,29 @@
 {% load static %}
 {% block title %}   {% endblock title%}
 
-{% block style %}  {% endblock style %}   
+{% block style %}
+
+.django-ckeditor-widget
+{
+    display: flex !important;
+}
+
+.heading
+{
+    background: darkcyan;
+}
+
+.link
+{
+  
+    color:black;
+}
+
+.link:hover
+{
+    text-decoration:none;
+}
+  {% endblock style %}   
 
 
 {% block links %} 
@@ -21,7 +43,7 @@
         <div class="row">
             
             <div class="col-md-9"> 
-                <h3>All Blogs </h3>
+                <h3 class="text-center mt-5 mb-4 heading">New Blog </h3>
 
                 <!-- <a href="{% static 'blog/js/tinyinject.js'%}">skdjf</a> -->
 
@@ -54,25 +76,15 @@
             </div>
             <div class="col-md-3">
 
-             <h3 class="text-center">All Blogs</h3>
+             <h3 class="text-center heading mt-5">Recent Blogs</h3>
             <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Author</th>
-                <th scope="col">Created On</th>
-
-                </tr>
-            </thead>
+            
             <tbody>
              {% for i in data %}
 
                 <tr>
-                <th scope="row">{{forloop.counter}}</th>
-                <td>{{i.title}}</td>
-                <td>{{i.created_by}}</td>
-                <td>{{i.created_on}}</td>
+                
+               <td> <a class="link" href="{% url 'detail_blog' i.id %}"> {{i.title}}</a> </td>
                 </tr>
              {% endfor %}
             

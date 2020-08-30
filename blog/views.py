@@ -31,7 +31,7 @@ def create_blog(request):
     form = Blog_Form()
     image_form = Images_Form()
 
-    data = Blog.objects.all().order_by('-created_on')
+    data = Blog.objects.all().order_by('-created_on')[:5]
 
     if request.method == "POST":
         form = Blog_Form(request.POST)  

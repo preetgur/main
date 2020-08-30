@@ -2,7 +2,28 @@
 
 {% block title %}   {% endblock title%}
 
-{% block style %}  {% endblock style %}   
+{% block style %} 
+
+[type=submit]
+{
+    text-align: center !important;
+    display: block !important;
+}
+
+.main
+{
+        display: flex;
+    justify-content: center;
+    align-items: center;
+    background: aliceblue;
+}
+
+ul >li 
+{
+    list-style: none;
+
+}
+ {% endblock style %}   
 
 
 {% block links %}   {% endblock links %} 
@@ -12,37 +33,56 @@
     <div class="container">
         <div class="row">
             
-            <div class="col-md-6"> 
+            <div class="col-md-12"> 
             
-             <form method="post">
+            <div class="row">
+                <div class="col-md-12 main"> 
+                
+                <form method="post">
                     {% csrf_token %}
 
                 <div class="form-group">
+                    <h1 class="m-2 text-center">Sign Up</h1>
+                    <hr>
                     <label for="">Username</label>
                     {% render_field form.username class="form-control"  placeholder="Enter username"%}  
+                      {% if form.username.help_text %}
+                        <small class="form-text text-muted">{{ form.username.help_text }}</small>
+                    {% endif %}
+
+                  <small class="text-danger form-text"> {{form.username.errors}} </small>       
                 </div>
 
                  <div class="form-group">
                     <label for="">Password</label>
                     {% render_field form.password1 class="form-control"  placeholder="Enter username"%}  
+
+                      {% if form.password1.help_text %}
+                        <small class="form-text text-muted">{{ form.password1.help_text }}</small>
+                    {% endif %}
+
+                  <small class="text-danger form-text"> {{form.password1.errors}} </small>       
                 </div>
 
                 <div class="form-group">
                     <label for="">Confirm Password</label>
                     {% render_field form.password2 class="form-control"  placeholder="Enter username"%}  
+                      {% if form.password2.help_text %}
+                    <small class="form-text text-muted">{{ form.password2.help_text }}</small>
+                    {% endif %}
+
+                    <small class="text-danger form-text"> {{form.password2.errors}} </small>       
                 </div>
 
             
-                    <button type="submit" class="btn btn-success ">Signup</button>
+                    <button type="submit" class="btn btn-success mx-auto ">Signup</button>
                 </form>
+                </div>
+            </div>
+             
             
             </div>
-            <div class="col-md-6">
-
-                {% for i in form.errors %}
-                    {{i}}
-                {% endfor %}
-             </div>
+            
 
         </div>
     </div>

@@ -2,7 +2,18 @@
 
 {% block title %}   {% endblock title%}
 
-{% block style %}  {% endblock style %}   
+{% block style %} 
+
+.login 
+{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: aliceblue;
+    margin-top: 40px;
+}
+ {% endblock style %}   
 
 
 {% block links %}   {% endblock links %} 
@@ -11,15 +22,20 @@
     <div class="container">
         <div class="row">
             
-            <div class="col-md-6"> 
-                 <h2>Login</h2>
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
+            <div class="col-md-12"> 
+                <div class="login">
+                    <form method="post">
+                    <h2>Login</h2>
+
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+
+             
             </div>
-            <div class="col-md-6"> </div>
+            
 
         </div>
     </div>

@@ -234,4 +234,4 @@ def signup(request):
 
 
     context = {"form":form}
-    return render(request,"poll_app/signup.html",context)
+    return render(request,"poll/signup.html",context)

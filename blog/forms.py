@@ -16,11 +16,11 @@ class Blog_Form(forms.ModelForm):
     # blog_category = forms.CheckboxSelectMultiple(choices=tags)
     class Meta :
         model = Blog
-        fields = ['title','content','blog_category']
+        fields = ['title','content']
 
-        widgets = {
-            'blog_category':forms.CheckboxSelectMultiple(),
-        }
+        # widgets = {
+        #     'blog_category':forms.CheckboxSelectMultiple(),
+        # }
 
 
 

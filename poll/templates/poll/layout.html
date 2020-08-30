@@ -45,9 +45,7 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{% url "blog_index" %}">Home </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About Us</a>
-                    </li>
+                 
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,7 +54,7 @@
                         <div class="dropdown-menu bg-danger" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item " href="{% url 'total_polls'%}">Poll App</a>
                             <a class="dropdown-item" href="{% url 'weather_index'%}">Weather App</a>
-                            <a class="dropdown-item" href="#">Employee Management App</a>
+                            <a class="dropdown-item" href="{% url 'show_blogs'%}">Blog App</a>
                         </div>
                     </li>
                 </ul>
