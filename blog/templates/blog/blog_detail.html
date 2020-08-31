@@ -9,6 +9,20 @@ img {
   height: auto;
 }
 
+.back
+{
+        border: 1px solid black;
+    padding: 5px;
+    margin-top: 5px;
+    display: inline-block;
+    border-radius: 2px;
+
+}
+.back:hover
+{
+    text-decoration : none;
+}
+
 {% endblock style %}
 
 
@@ -23,6 +37,7 @@ img {
 {% block body %}
 {% load widget_tweaks %}
 <div class="container">
+        <span><a class="back " href="{% url 'show_blogs' %}"> Back</a></span>
     <div class="row mt-4">
 
         <div class="col-md-9">
@@ -37,10 +52,19 @@ img {
                         <p class="card-text  h6 text-danger">
                             {{i.created_by|upper}} | <span class="text-muted">{{ i.created_on}} </span>
                         </p>
+    <hr>
+                        <p class="card-text">
+
+                        {# "display_my_safefield" return the html escaping used in "content" inside blog #}
+                        {{i.display_my_safefield}}
+
+
+                    </p>
+
                     </div>
 
                     <div class="col-md-3 ">
-                    {% if user_additional %} 
+                    {% comment %} {% if user_additional %} 
                     <span class="float-right">
                         
                         <img src="{{MEDIA_URL}}{{user_additional.profile_pic}}" class="rounded-circle " style="width:100px;height:auto;" alt="No image">
@@ -63,16 +87,8 @@ img {
 
                         {% endif %}
 
-                   {% endif %}
-                    <hr>
-                    <p class="card-text">
-
-                        {# "display_my_safefield" return the html escaping used in "content" inside blog #}
-                        {{i.display_my_safefield}}
-
-
-                    </p>
-
+                   {% endif %} {% endcomment %}
+                  
                     <div style="width:25%;height:auto;display:flex;">
 
                     {% for j in i.img %}
@@ -293,9 +309,10 @@ img {
 
 
         </div>
+</div>
+</div>
 
-
-        <div class="col-md-3">
+        <div class="col-md-3" style="height: 90vh; overflow: auto;">
 
             <ul class="list-group list-group-flush">
                 <h2>Recent Blogs</h2>

@@ -49,9 +49,10 @@
             {% if data %}
 
             <div class="alert alert-primary text-center" role="alert">
-             {{name}} | {{data.sys.country}}
+             {{name}} | {{data.sys.country}} | <span class="text-danger"> {{weather.0.main}} </span>
             </div>
 
+            <p>Click on button to know about weather</p>
             <div class="row d-flex justify-content-between">
                 <div class="col-6-md">
 

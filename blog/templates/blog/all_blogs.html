@@ -12,8 +12,23 @@
 .heading
 {
     background: darkcyan;
+        border: 2px solid black;
+    padding: 5px;
 }
 
+.back
+{
+    display: block;
+    padding: 2px;
+    border-radius: 3px;
+    border: 1px solid white;
+    color: white !important;
+}
+
+.back:hover{
+    color: black !important;
+
+}
 .link
 {
   
@@ -23,6 +38,12 @@
 .link:hover
 {
     text-decoration:none;
+}
+
+.disp
+{
+    display:flex;
+    justify-content: space-around;
 }
   {% endblock style %}   
 
@@ -40,10 +61,13 @@
 {% load widget_tweaks %}
 
     <div class="container">
-        <div class="row">
+        <div class="row">            
+            <div class="col-md-9 "> 
             
-            <div class="col-md-9"> 
-                <h3 class="text-center mt-5 mb-4 heading">New Blog </h3>
+                <h3 class="text-center mt-5 mb-4 heading disp">Create New Blog 
+        <span><a class="link back " href="{% url 'show_blogs' %}"> Back</a></span>
+
+                </h3>
 
                 <!-- <a href="{% static 'blog/js/tinyinject.js'%}">skdjf</a> -->
 
@@ -84,7 +108,7 @@
 
                 <tr>
                 
-               <td> <a class="link" href="{% url 'detail_blog' i.id %}"> {{i.title}}</a> </td>
+               <td> <a class="link text-danger" href="{% url 'detail_blog' i.id %}"> {{i.title}}</a> </td>
                 </tr>
              {% endfor %}
             

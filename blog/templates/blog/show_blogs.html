@@ -30,8 +30,6 @@ text-decoration : none !important;
 
 {% block body %}
 {% load widget_tweaks %}
-<div class="container">
-    <div class="row mt-4">
 
         <!-- Accessing  the New_Blog Model From Images Model with the help of FK-->
         <!-- inside views.py
@@ -59,7 +57,31 @@ text-decoration : none !important;
 
 
         {% comment %} <a href="{% static 'blog/my.txt' %}">My Text </a> {% endcomment %}
-        <div class="col-md-9">
+
+<div class="container">
+
+   
+
+    <div class="row mt-4">
+        <div class="col-md-3">
+
+          
+            <a href="{% url 'all_blogs' %}" class="btn btn-primary mb-3">Create New Blog &rarr;</a>
+        
+    
+             <ul class="list-group list-group-flush">
+                <h3> Recent Blogs</h3>
+                {% for i in blogs %}
+
+                <li class="list-group-item text-danger">
+                    <a href="detail/{{i.id}}" class="text-danger">{{i.title}} </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+
+        <div class="col-md-8">
             {% for i in blogs %}
 
                 <div class="card mb-4" id="{{i.id}}">
@@ -71,10 +93,12 @@ text-decoration : none !important;
                         <hr>
                         <p class="card-text">
                          
-                            {{i.display_my_safefield|truncatewords:"40"}}
+                            
 
                             {% if i.content|length > 200 %}
                                 {% comment %} {{i.display_my_safefield|slice}} {% endcomment %}
+                                {{i.display_my_safefield|truncatewords:"40"}}
+                                {% comment %} {{i.content|safe}} {% endcomment %}
                             {% comment %} <span class="text-danger ml-1">. . . .</span> {% endcomment %}
                             {% endif %}
 
@@ -108,19 +132,6 @@ text-decoration : none !important;
             {% endfor %}
         </div>
 
-        <div class="col-md-3">
-            <ul class="list-group list-group-flush">
-                <h3> Recent Blogs</h3>
-                {% for i in blogs %}
-
-                <li class="list-group-item text-danger">
-                    <a href="{{i.id}}" class="text-danger">{{i.title}} </a>
-                </li>
-                {% endfor %}
-
-            </ul>
-
-        </div>
 
     </div>
 

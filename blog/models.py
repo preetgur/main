@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 # Create your models here.
 
-
+# profile pic
 class User_Additional_Info(models.Model):
 
     users = models.OneToOneField(User,on_delete=models.CASCADE)

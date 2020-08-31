@@ -28,7 +28,14 @@
   }  
 }
 
-
+.result
+{
+    border-radius: 5px;
+    background: whitesmoke;
+    border: 1px solid black;
+    padding: 10px;
+}
+}
 {% endblock style %}   
 
 
@@ -45,9 +52,9 @@
 
 {% load tags %}
     {% if poll.created_on|status %}
-        <h1>Poll is Active</h1>
+        <h1 class="text-danger text-center">Poll is Active</h1>
     {% else%}
-        <h2>Poll is Not Active</h2>    
+        <h2 class="text-danger text-center">Poll is Not Active</h2>    
     {% endif %}    
 
      <div class="row mt-3">
@@ -156,7 +163,7 @@
 
         </div>
     <!-- ##########################33-->
-    <div class="col-md-6" id="choice">
+    <div class="col-md-6 result" id="choice">
 
             <div class="alert alert-primary text-center" role="alert">
                 Choices

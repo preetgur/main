@@ -104,8 +104,8 @@ def detail_blog(request ,pk):
 
 
 
-    ab =User_Additional_Info.objects.get(users=request.user)
-    print("@#@#@#@#@#@##@ ",ab)
+    # ab =User_Additional_Info.objects.get(users=request.user)
+    # print("@#@#@#@#@#@##@ ",ab)
     # Get the Blog with the help of "pk"
     blog = Blog.objects.get(id = pk)
     blogs = Blog.objects.all().order_by('-created_on')
@@ -178,7 +178,7 @@ def detail_blog(request ,pk):
         "comments":Comment.objects.filter(blog = blog , parent__isnull=True).order_by('-timestamp'),
         "form":form,
         "total_comments":Comment.objects.filter(blog=blog,parent__isnull=True).count(),
-        "user_additional":User_Additional_Info.objects.get(users=blog.created_by),
+        # "user_additional":User_Additional_Info.objects.get(users=blog.created_by),
 
 
         }
