@@ -14,10 +14,14 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+<<<<<<< HEAD
 print("### abs path of settings.py                ### ",os.path.abspath(__file__))
 print("### Directory in which settings.py resides ### ",os.path.dirname(os.path.abspath(__file__)))
 
 print("### parent of above directory              ### ",BASE_DIR)
+=======
+
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -48,11 +52,14 @@ INSTALLED_APPS = [
     'student',
     'poll',
     'poll.templatetags',   # using custom tags 
+<<<<<<< HEAD
     'blog',
     'ckeditor', # using for edit blog like ms-word  
     'ckeditor_uploader',
 
     'd_forms' # new app
+=======
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
     
 ]
 
@@ -75,13 +82,19 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+<<<<<<< HEAD
                 # adding custom context processros
                 'd_forms.processors.context_blog',
+=======
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+<<<<<<< HEAD
                 'django.template.context_processors.media', # to use {{Media_url}} in template
+=======
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
             ],
         },
     },
@@ -125,7 +138,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+<<<<<<< HEAD
 TIME_ZONE =  'Asia/Kolkata'
+=======
+TIME_ZONE = 'Asia/Kolkata'
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 
 USE_I18N = True
 
@@ -133,7 +150,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+<<<<<<< HEAD
 LOGIN_REDIRECT_URL = 'blog_index'
+=======
+LOGIN_REDIRECT_URL = 'total_polls'
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -141,6 +162,7 @@ LOGIN_REDIRECT_URL = 'blog_index'
 STATIC_URL = '/static/'
 
 
+<<<<<<< HEAD
 # url for media files
 
 MEDIA_URL ='/media/'   # use any name
@@ -150,10 +172,13 @@ MEDIA_URL ='/media/'   # use any name
 # remember we can use any folder name
 MEDIA_ROOT = os.path.join(BASE_DIR,'image_folder/images')
 
+=======
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 # AUTH_USER_MODEL = 'YourAppName.YourClassName'
 # YourAppName: This is the name of the app that will have the User Model
 # YourClassName: This is the name of the class used inside the models.py file
 # AUTH_USER_MODEL = 'student.User'
+<<<<<<< HEAD
 
 
 
@@ -175,3 +200,5 @@ CKEDITOR_CONFIGS = {
         'toolbar': None,
     },
 }
+=======
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7

@@ -21,6 +21,7 @@ urlpatterns = [
     path('weather',include("weather.urls")),
     path('student',include("student.urls")),
     path("poll/",include('poll.urls')),
+<<<<<<< HEAD
     path("",include('blog.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
@@ -35,3 +36,8 @@ from django.conf import settings
 
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+=======
+
+
+]
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7

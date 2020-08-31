@@ -42,7 +42,11 @@ def index(request):
         question_form = Question_Form(request.POST)
         choice_form = [Choice_Form(request.POST,prefix=str(x),instance=Choice()) for x in range(1,4)]
         print("### choice forms :",choice_form," Length",len(choice_form))
+<<<<<<< HEAD
         if question_form.is_valid() and all( [ i.is_valid() for i in choice_form ] ):
+=======
+        if question_form.is_valid and all( [ i.is_valid() for i in choice_form ] ):
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
    
             poll = question_form.save(commit=False)
             poll.created_by = request.user
@@ -81,6 +85,7 @@ def total_polls(request):
 
     all_question = Question.objects.all().order_by('-created_on')
     total = Question.objects.count()
+<<<<<<< HEAD
     user_data = ""
     # if request.user == "AnonymousUser":
     #     user_data = None
@@ -103,6 +108,9 @@ def total_polls(request):
          "total":total,
         #  "user_data":user_data,
          }
+=======
+    context = { "all_question":all_question,"total":total}
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
     return render(request,"poll/polls.html",context)
 
 @login_required(login_url="login")
@@ -234,4 +242,8 @@ def signup(request):
 
 
     context = {"form":form}
+<<<<<<< HEAD
     return render(request,"poll/signup.html",context)
+=======
+    return render(request,"poll_app/signup.html",context)
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7

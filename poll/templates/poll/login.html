@@ -2,6 +2,7 @@
 
 {% block title %}   {% endblock title%}
 
+<<<<<<< HEAD
 {% block style %} 
 
 .login 
@@ -14,6 +15,9 @@
     margin-top: 40px;
 }
  {% endblock style %}   
+=======
+{% block style %}  {% endblock style %}   
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 
 
 {% block links %}   {% endblock links %} 
@@ -22,6 +26,7 @@
     <div class="container">
         <div class="row">
             
+<<<<<<< HEAD
             <div class="col-md-12"> 
                 <div class="login">
                     <form method="post">
@@ -36,6 +41,17 @@
              
             </div>
             
+=======
+            <div class="col-md-6"> 
+                 <h2>Login</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+            <div class="col-md-6"> </div>
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 
         </div>
     </div>

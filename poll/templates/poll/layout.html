@@ -43,14 +43,23 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
+<<<<<<< HEAD
                         <a class="nav-link" href="{% url "blog_index" %}">Home </a>
                     </li>
                  
+=======
+                        <a class="nav-link" href="{% url "home" %}">Home </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Projects
                         </a>
+<<<<<<< HEAD
 
                         <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink" style="background-color: #e9ecef!important;">
                             <a class="dropdown-item " href="{% url 'total_polls'%}">Poll App</a>
@@ -58,6 +67,12 @@
                             <a class="dropdown-item" href="{% url 'show_blogs'%}">Blog App
                             
                             </a>
+=======
+                        <div class="dropdown-menu bg-danger" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item " href="{% url 'total_polls'%}">Poll App</a>
+                            <a class="dropdown-item" href="{% url 'weather_index'%}">Weather App</a>
+                            <a class="dropdown-item" href="#">Employee Management App</a>
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
                         </div>
                     </li>
                 </ul>

@@ -32,12 +32,18 @@ span
         <a href="{% url "poll" %}" class="btn btn-danger">Create New Poll</a>
     </div>
 
+<<<<<<< HEAD
 
 
 
     <div class="row mt-5 ">
         <div class="col-md-10 ">
         <h3 class="bg-danger text-center p-2"><span class="text-white ml-3">Each Poll Avilable for 48 hrs </span></h3>
+=======
+    <div class="row mt-5 ">
+        <div class="col-md-10 ">
+        <h3 class="bg-danger text-center p-2">Question List</h3>
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
             {% for i in all_question %}
 
                 <ul class="list-group list-group-flush">
@@ -45,6 +51,7 @@ span
                    <span class=" mr-2 text-info">{{forloop.counter}} )</span>    {{i.title}}  
                         <span class="float-right"> 
                         {% load tags %}
+<<<<<<< HEAD
                        <a href="#" class="btn disabled btn-outline-danger">{{i.created_on}} </a>    
                        <!-- Created_on value is passed to the tags.py and then return some value-->
                         {% comment %} {{i.created_on|status}} {% endcomment %}
@@ -67,12 +74,24 @@ span
 
                            
                       
+=======
+                            {% if i.created_on|status %}
+                                <a href="{% url 'give_vote' i.id %}" class="btn btn-primary"> Vote</a>  
+                                
+                            {% else%}
+                                <a href="#" class="btn btn-primary">Time Over</a>  
+                                   
+                            {% endif %}   
+                            <a href="{% url 'result' i.id %}" class="btn btn-danger"> Result</a> 
+                        </span> 
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
                     </li>
                 </ul>
 
             {% endfor %}
         
         </div>
+<<<<<<< HEAD
 
     {% comment %} {% if request.user%}
         AnonymousUser
@@ -110,6 +129,8 @@ span
     Not logged in 
     {% endif %} {% endcomment %}
 
+=======
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
     </div>
 </div>
 

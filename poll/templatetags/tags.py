@@ -10,7 +10,11 @@ register = template.Library()
 @register.filter(name="is_admin")    # "is_admin" is a filter name it can be named different form fxn name
 def has_group(logged_in_user,arg1):
     print("!!!!!!!!!!!! custom tags :  :",logged_in_user)
+<<<<<<< HEAD
     # print("### data get from template ###",arg1)  
+=======
+    print("### data get from template ###",arg1)  
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
     #  is_admin:"gurpreet" ,gurpreet store in arg1
 
     
@@ -27,14 +31,19 @@ def has_group(logged_in_user,arg1):
 
 from datetime import datetime ,time,timedelta
 import pytz
+<<<<<<< HEAD
 from dateutil.tz import *
 
 local = tzlocal()
+=======
+
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 
 @register.filter(name="status")
 def status(question_created_on):
 
     # Added 10 minutes on database datetime 
+<<<<<<< HEAD
     # print(" ##### Created On #####   ",question_created_on)
     add_datetime = question_created_on + timedelta(hours = 60) # difference bw time is 6 hrs : valid for 24 hrs
     current_datetime = datetime.now()
@@ -94,6 +103,26 @@ def split(value, arg):
 
 
 """
+=======
+    print(" 000000000000000000000   ",question_created_on)
+    add_datetime = question_created_on + timedelta(hours = 2)
+    current_datetime = datetime.now()
+    print("333",add_datetime)
+    # Replace the timezon in both time
+
+    expired_on = add_datetime.replace(tzinfo = pytz.utc)
+    checked_on = current_datetime.replace(tzinfo = pytz.utc)
+
+
+    if expired_on < checked_on:
+        print("Time Out")
+        return False
+
+    else :
+        print("Time Not Crossed")
+        return True
+
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 
 """ 
 And in your template you would use the following:

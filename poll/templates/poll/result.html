@@ -28,6 +28,7 @@
   }  
 }
 
+<<<<<<< HEAD
 .result
 {
     border-radius: 5px;
@@ -36,6 +37,9 @@
     padding: 10px;
 }
 }
+=======
+
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 {% endblock style %}   
 
 
@@ -52,9 +56,15 @@
 
 {% load tags %}
     {% if poll.created_on|status %}
+<<<<<<< HEAD
         <h1 class="text-danger text-center">Poll is Active</h1>
     {% else%}
         <h2 class="text-danger text-center">Poll is Not Active</h2>    
+=======
+        <h1>Poll is Active</h1>
+    {% else%}
+        <h2>Poll is Not Active</h2>    
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
     {% endif %}    
 
      <div class="row mt-3">
@@ -163,7 +173,11 @@
 
         </div>
     <!-- ##########################33-->
+<<<<<<< HEAD
     <div class="col-md-6 result" id="choice">
+=======
+    <div class="col-md-6" id="choice">
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
 
             <div class="alert alert-primary text-center" role="alert">
                 Choices
@@ -175,7 +189,11 @@
                 {% for i in choice %}
 
                 <div class="card text-white  text-center bg-info mb-3" style="max-width: 8rem;">
+<<<<<<< HEAD
                     <div class="card-header">{{i|upper}}</div>
+=======
+                    <div class="card-header">{{i}}</div>
+>>>>>>> 55fe3e4c34ff151a9c3852917123362152c84fc7
                     <div class="card-body">
                         <h5 class="card-title"> {{i.votes}}</h5>
 
