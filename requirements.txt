@@ -16,7 +16,7 @@ django-rest-auth==0.9.3
 django-role-permissions==2.2.1
 django-widget-tweaks==1.4.8
 django-widgets==0.1.16
-djangorestframework==3.8.2
+djangorestframework==3.11.2
 fake-factory==9999.9.9
 Faker==2.0.4
 gunicorn==19.7.1
